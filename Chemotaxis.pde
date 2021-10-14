@@ -1,9 +1,9 @@
-Bacterium[] bacteria = new Bacterium[(int) (Math.random() * 500) + 100];
+Bacterium[] bacteria = new Bacterium[450];
 
 void setup() {
   size(800, 800, P3D);
   noStroke();
-  for (int i = 0; i < bacteria.length; i++) {
+  for (int i = 0; i < 450; i++) {
     bacteria[i] = new Bacterium();
   }
 }   
@@ -39,8 +39,8 @@ class Bacterium {
   }
 
   void explode() {
-    this.y += Rand.num(200, -200);
-    this.x += Rand.num(200, -200);
+    this.y += Rand.num(400, -200);
+    this.x += Rand.num(400, -200);
   }
 
   void move() {
@@ -48,7 +48,7 @@ class Bacterium {
       this.explode();
       return;
     }
-    
+
     if (mouseY > this.y) {
       this.y += (int) (Math.random() * 15) - 5;
     } else {
@@ -60,15 +60,17 @@ class Bacterium {
     } else {
       this.x -= (int) (Math.random() * 15) - 5;
     }
-    
-    this.z += Rand.num(10, -10);
   }
 
   void render() {
     pushMatrix();
     translate(this.x, this.y, this.z);
     fill(this.r, this.g, this.b);
-    sphere(this.size);
+    if (Rand.num(2, 0) > 0) {
+      sphere(this.size);
+    } else {
+      box(this.size);
+    }
     popMatrix();
   }
 }    
