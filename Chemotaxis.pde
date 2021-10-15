@@ -1,9 +1,9 @@
-Bacterium[] bacteria = new Bacterium[450];
+Bacterium[] bacteria = new Bacterium[600];
 
 void setup() {
   size(800, 800, P3D);
   noStroke();
-  for (int i = 0; i < 450; i++) {
+  for (int i = 0; i < 600; i++) {
     bacteria[i] = new Bacterium();
   }
 }   
@@ -25,47 +25,56 @@ static class Rand {
 
 class Bacterium { 
   int x, y, z;
-  int r, g, b;
+  color rgb;
   int size;
 
   Bacterium() {
-    this.x = (int) (Math.random() * 800) + 5;
-    this.y = (int) (Math.random() * 800) + 5;
-    this.z = (int) (Math.random() * 40) + 5;
-    this.r = Rand.num(255, 0);
-    this.g = Rand.num(255, 0);
-    this.b = Rand.num(255, 0);
-    this.size = (int) (Math.random() * 10) + 3;
+    this.x = Rand.num(800, 5);
+    this.y = Rand.num(800, 5);
+    this.z = Rand.num(40, 5);
+
+    this.rgb = color(Rand.num(256, 0), Rand.num(256, 0), Rand.num(256, 0));
+
+    this.size = Rand.num(10, 3);
   }
 
   void explode() {
-    this.y += Rand.num(400, -200);
     this.x += Rand.num(400, -200);
+    this.y += Rand.num(400, -200);
   }
 
   void move() {
+    int max = 15;
+    int min = -5;
     if (mousePressed) {
-      this.explode();
-      return;
-    }
-
-    if (mouseY > this.y) {
-      this.y += (int) (Math.random() * 15) - 5;
-    } else {
-      this.y -= (int) (Math.random() * 15) - 5;
+      switch (mouseButton) {
+      case LEFT:
+        this.explode();
+        return;
+      case RIGHT:
+        max = 60;
+        min = -10;
+      }
     }
 
     if (mouseX > this.x) {
-      this.x += (int) (Math.random() * 15) - 5;
+      this.x += Rand.num(max, min);
     } else {
-      this.x -= (int) (Math.random() * 15) - 5;
+      this.x -= Rand.num(max, min);
+    }
+
+    if (mouseY > this.y) {
+      this.y += Rand.num(max, min);
+    } else {
+      this.y -= Rand.num(max, min);
     }
   }
 
   void render() {
     pushMatrix();
     translate(this.x, this.y, this.z);
-    fill(this.r, this.g, this.b);
+    sphereDetail(Rand.num(30, 1));
+    fill(this.rgb);
     if (Rand.num(2, 0) > 0) {
       sphere(this.size);
     } else {
