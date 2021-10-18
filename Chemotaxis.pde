@@ -3,6 +3,7 @@ Bacterium[] bacteria = new Bacterium[600];
 void setup() {
   size(800, 800, P3D);
   noStroke();
+  frameRate(100);
   for (int i = 0; i < 600; i++) {
     bacteria[i] = new Bacterium();
   }
