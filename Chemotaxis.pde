@@ -19,8 +19,8 @@ void draw() {
 }  
 
 static class Rand {
-  static int num(int n, int m) {
-    return (int) (Math.random() * n) + m;
+  static int num(int max, int min) {
+    return (int) (Math.random() * max) + min;
   }
 }
 
